@@ -1,0 +1,78 @@
+{
+	"_version": "3.0.0",
+	"identification": {
+		"id": "3bee431d-c14e-4bcf-a987-2377a1f58532",
+		"entityType": "bundle"
+	},
+	"payload": {
+		"catalogs": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultCatalogId",
+				"title": "{{title}}",
+				"entityType": "catalog",
+				"i18n": "i18n/defaultCatalogId.properties"
+			},
+			"payload": {
+				"viz": []
+			}
+		}],
+		"groups": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultGroupId",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/defaultGroupId.properties"
+			},
+			"payload": {
+				"viz": [{
+					"id": "com.sap.bpm.monitorworkflow-0-1613409835913",
+					"appId": "com.sap.bpm.monitorworkflow",
+					"vizId": "bpmworkflowmonitor-DisplayInstances"
+				}, {
+					"id": "com.sap.bpm.monitorworkflow-1-1613409920395",
+					"appId": "com.sap.bpm.monitorworkflow",
+					"vizId": "bpmworkflowmonitor-DisplayDefinitions"
+				}, {
+					"id": "cross.fnd.fiori.inbox-2-1613409920395",
+					"appId": "cross.fnd.fiori.inbox",
+					"vizId": "WorkflowTask-DisplayMyInbox"
+				}]
+			}
+		}],
+		"sites": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "4b574071-2afc-44a6-af29-d016a71beadc",
+				"entityType": "site",
+				"title": "SAP Fiori launchpad site on Cloud Foundry",
+				"description": "SAP Fiori launchpad site on Cloud Foundry, deployed from WING"
+			},
+			"payload": {
+				"config": {
+					"ushellConfig": {
+						"renderers": {
+							"fiori2": {
+								"componentData": {
+									"config": {
+										"applications": {
+											"Shell-home": {}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"groupsOrder": ["defaultGroupId"],
+				"sap.cloud.portal": {
+					"config": {
+						"theme.id": "sap_fiori_3",
+						"theme.active": ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize_hcb", "sap_belize_hcw"]
+					}
+				}
+			}
+		}]
+	}
+}

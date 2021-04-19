@@ -1,0 +1,116 @@
+_schema-version: "3.2"
+ID: FMTA
+version: 0.0.1
+modules:
+- name: approvals
+  type: com.sap.application.content
+  path: approvals
+  requires:
+  - name: workflow_mta
+    parameters:
+      content-target: true
+- name: fmta-approuter
+  type: approuter.nodejs
+  path: fmta-approuter
+  requires:
+  - name: FMTA_html_repo_runtime
+  - name: uaa_FMTA
+  - name: portal_resources_FMTA
+  - name: workflow_mta
+  - name: dest_app
+  - name: dest_connectivity
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: FMTA_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: FMTA_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - managerUI-content.zip
+      name: managerUI
+      target-path: resources/
+    - artifacts:
+      - EmployeeUI-content.zip
+      name: EmployeeUI
+      target-path: resources/
+- name: managerUI
+  type: html5
+  path: managerUI
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: flp
+  type: com.sap.application.content
+  path: flp
+  requires:
+  - name: portal_resources_FMTA
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: content-deploy-key
+  - name: FMTA_html_repo_host
+  - name: FMTA_ui_deployer
+  - name: uaa_FMTA
+  - name: workflow_mta
+- name: EmployeeUI
+  type: html5
+  path: EmployeeUI
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: workflow_mta
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: workflow
+    service-plan: lite
+- name: FMTA_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: FMTA_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: uaa_FMTA
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: FMTA-xsuaa-service
+    service-plan: application
+- name: portal_resources_FMTA
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
+- name: dest_app
+  type:  org.cloudfoundry.existing-service
+  parameters:
+    service-plan: lite
+    service: destination
+- name: dest_connectivity
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

@@ -1,0 +1,46 @@
+<mvc:View controllerName="com.ns.emp.EmployeeUI.controller.Main" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+                        <List
+                            id="idEmployeeList"
+                            items="{path: 'northwind>/Employees'}"
+                            updateFinished='onUpdateFinished'
+                            mode='SingleSelectMaster'
+                            selectionChange='onListSelChg'>
+                                <ObjectListItem
+                                    title="{northwind>LastName}, {northwind>FirstName}"
+                                    type="Active"
+                                    press="onListItemPress"
+                                    number="{northwind>PostalCode}"
+                                    numberUnit="{northwind>Country}"
+                                    >
+                                <firstStatus>
+                                    <ObjectStatus
+                                        text="{Status}"
+                                        state="{
+                                            path: 'Status'
+                                        
+                                        }" />
+                                </firstStatus>
+                                <ObjectAttribute text="{northwind>Region}" />
+                                <ObjectAttribute text="{northwind>HomePhone}" />
+                                <markers>
+                                    <ObjectMarker type="Flagged" />
+                                    <ObjectMarker type="Locked" />
+                                </markers>			
+                            </ObjectListItem>
+                        </List>	
+                    </content>
+                    <footer>
+                        <Toolbar >
+                            <Button text='Start Service' press='onStartPress' />
+                        </Toolbar>
+                    </footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
